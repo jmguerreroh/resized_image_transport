@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>resized_image_transport</name>
+  <version>1.0.0</version>
+  <description>
+    resized_image_transport provides a plugin to image_transport for
+    transparently sending an image resizing using OpenCV.
+  </description>
+  <author>Jose Miguel Guerrero Hernandez</author>
+  <maintainer email="josemiguel.guerrero@urjc.es">Jose Miguel Guerrero Hernandez</maintainer>
+  <license>BSD</license>
+
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <buildtool_depend>rosidl_default_generators</buildtool_depend>
+  <buildtool_depend>pkg-config</buildtool_depend>
+
+  <exec_depend>rosidl_default_runtime</exec_depend>
+
+  <depend>cv_bridge</depend>
+  <depend>image_transport</depend>
+  <depend>libogg</depend>
+  <depend>libopencv-dev</depend>
+  <depend>libresized</depend>
+  <depend>pluginlib</depend>
+  <depend>rclcpp</depend>
+  <depend>rcutils</depend>
+  <depend>sensor_msgs</depend>
+  <depend>std_msgs</depend>
+
+  <test_depend>ament_lint_common</test_depend>
+
+  <member_of_group>rosidl_interface_packages</member_of_group>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+    <image_transport plugin="${prefix}/resized_plugins.xml" />
+  </export>
+</package>
