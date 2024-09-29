@@ -1,7 +1,7 @@
 /*********************************************************************
 * Software License Agreement (BSD License)
 *
-*  Copyright (c) 2023, José Miguel Guerrero Hernández.
+*  Copyright (c) 2024, José Miguel Guerrero Hernández.
 *  All rights reserved.
 *
 *  Redistribution and use in source and binary forms, with or without
@@ -32,38 +32,36 @@
 *  POSSIBILITY OF SUCH DAMAGE.
 *********************************************************************/
 
-#include <sensor_msgs/msg/image.hpp>
-#include <sensor_msgs/msg/compressed_image.hpp>
-
-#include <image_transport/simple_publisher_plugin.hpp>
-#include <cv_bridge/cv_bridge.h>
-#include <std_msgs/msg/header.hpp>
+#include <image_transport/simple_subscriber_plugin.hpp>
 #include <resized_image_transport/msg/resized_image.hpp>
 
-namespace resized_image_transport {
-
-class ResizedPublisher: public image_transport::SimplePublisherPlugin 
-                                <resized_image_transport::msg::ResizedImage>
+namespace resized_image_transport
 {
-  public:
-      ResizedPublisher();
-      virtual ~ResizedPublisher();
+
+class ResizedSubscriber : public image_transport::SimpleSubscriberPlugin
+  <resized_image_transport::msg::ResizedImage>
+{
+public:
+  ResizedSubscriber();
+  virtual ~ResizedSubscriber();
       // Return the system unique string representing the resized transport type
-      virtual std::string getTransportName() const {return "resized";}
+  std::string getTransportName() const override {return "resized";}
 
-  protected:
-      virtual void advertiseImpl(
-        rclcpp::Node * node,
-        const std::string & base_topic,
-        uint32_t queue_size,
-        rmw_qos_profile_t custom_qos);
+protected:
+  void subscribeImpl(
+    rclcpp::Node *,
+    const std::string & base_topic,
+    const Callback & callback,
+    rmw_qos_profile_t custom_qos,
+    rclcpp::SubscriptionOptions options) override;
 
-      // Main publish function
-      void publish(
-        const sensor_msgs::msg::Image & message,
-        const PublishFn & publish_fn) const;
+  // The function that does the actual decompression and calls a user supplied
+  // callback with the resulting image
+  virtual void internalCallback(
+    const resized_image_transport::msg::ResizedImage::ConstSharedPtr & msg,
+    const Callback & user_cb) override;
 
-      rclcpp::Logger logger_;
+  rclcpp::Logger logger_;
 };
 
-} //namespace compressed_image_transport
+} //namespace resized_image_transport

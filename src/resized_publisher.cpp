@@ -1,7 +1,7 @@
 /*********************************************************************
 * Software License Agreement (BSD License)
 *
-*  Copyright (c) 2023, José Miguel Guerrero Hernández.
+*  Copyright (c) 2024, José Miguel Guerrero Hernández.
 *  All rights reserved.
 *
 *  Redistribution and use in source and binary forms, with or without
@@ -32,7 +32,7 @@
 *  POSSIBILITY OF SUCH DAMAGE.
 *********************************************************************/
 
-#include "resized_image_transport/resized_publisher.h"
+#include "resized_image_transport/resized_publisher.hpp"
 
 #include <rclcpp/logging.hpp>
 #include <sensor_msgs/image_encodings.hpp>
@@ -53,16 +53,13 @@ ResizedPublisher::~ResizedPublisher() {}
 void ResizedPublisher::advertiseImpl(
   rclcpp::Node * node,
   const std::string & base_topic,
-  uint32_t queue_size,
-  rmw_qos_profile_t custom_qos)
+  rmw_qos_profile_t custom_qos,
+  rclcpp::PublisherOptions options)
 {
   logger_ = node->get_logger();
 
-  custom_qos.history = rmw_qos_profile_default.history;
-  custom_qos.depth = queue_size + 4;
-
   typedef image_transport::SimplePublisherPlugin<resized_image_transport::msg::ResizedImage> Base;
-  Base::advertiseImpl(node, base_topic, custom_qos);
+  Base::advertiseImpl(node, base_topic, custom_qos, options);
 }
 
 
