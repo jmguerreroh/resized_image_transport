@@ -20,9 +20,7 @@
 
   <depend>cv_bridge</depend>
   <depend>image_transport</depend>
-  <depend>libogg</depend>
   <depend>libopencv-dev</depend>
-  <depend>libresized</depend>
   <depend>pluginlib</depend>
   <depend>rclcpp</depend>
   <depend>rcutils</depend>
