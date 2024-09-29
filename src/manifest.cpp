@@ -1,7 +1,7 @@
 /*********************************************************************
 * Software License Agreement (BSD License)
 *
-*  Copyright (c) 2023, José Miguel Guerrero Hernández.
+*  Copyright (c) 2024, José Miguel Guerrero Hernández.
 *  All rights reserved.
 *
 *  Redistribution and use in source and binary forms, with or without
@@ -33,8 +33,8 @@
 *********************************************************************/
 
 #include <pluginlib/class_list_macros.hpp>
-#include "resized_image_transport/resized_publisher.h"
-#include "resized_image_transport/resized_subscriber.h"
+#include "resized_image_transport/resized_publisher.hpp"
+#include "resized_image_transport/resized_subscriber.hpp"
 
 PLUGINLIB_EXPORT_CLASS(resized_image_transport::ResizedPublisher, image_transport::PublisherPlugin)
 

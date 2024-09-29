@@ -1,7 +1,7 @@
 /*********************************************************************
 * Software License Agreement (BSD License)
 *
-*  Copyright (c) 2023, José Miguel Guerrero Hernández.
+*  Copyright (c) 2024, José Miguel Guerrero Hernández.
 *  All rights reserved.
 *
 *  Redistribution and use in source and binary forms, with or without
@@ -32,9 +32,9 @@
 *  POSSIBILITY OF SUCH DAMAGE.
 *********************************************************************/
 
-#include "resized_image_transport/resized_subscriber.h"
+#include "resized_image_transport/resized_subscriber.hpp"
 
-#include <cv_bridge/cv_bridge.h>
+#include <cv_bridge/cv_bridge.hpp>
 #include <rclcpp/logging.hpp>
 #include <sensor_msgs/image_encodings.hpp>
 
@@ -53,23 +53,13 @@ void ResizedSubscriber::subscribeImpl(
   rclcpp::Node * node,
   const std::string & base_topic,
   const Callback & callback,
-  rmw_qos_profile_t custom_qos)
-{
-  this->subscribeImpl(node, base_topic, callback, custom_qos, rclcpp::SubscriptionOptions{});
-}
-
-void ResizedSubscriber::subscribeImpl(
-  rclcpp::Node * node,
-  const std::string & base_topic,
-  const Callback & callback,
   rmw_qos_profile_t custom_qos,
   rclcpp::SubscriptionOptions options)
 {
   logger_ = node->get_logger();
   typedef image_transport::SimpleSubscriberPlugin<resized_image_transport::msg::ResizedImage> Base;
-  Base::subscribeImplWithOptions(node, base_topic, callback, custom_qos, options);
+  Base::subscribeImpl(node, base_topic, callback, custom_qos, options);
 }
-
 
 void ResizedSubscriber::internalCallback(
   const resized_image_transport::msg::ResizedImage::ConstSharedPtr & message,
